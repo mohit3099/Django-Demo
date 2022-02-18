@@ -59,6 +59,28 @@
                         {{ c_form|crispy }}
                         <input class="btn btn-primary btn-sm" type="submit" value="Comment">
                     </form>
+                    <br/><br/>
+                    <hr>
+                    <br/>
+                    <form action="{% url 'like_post' post.pk %}"
+                    method="POST">
+                        {% csrf_token %}
+                    {% if request.user.is_authenticated %}
+                        {% if liked %}
+                            <button type="submit", name="post_id",
+                            value="{{ post.id }}", class= "btn 
+                            btn-danger btn-sm">Unlike</button>
+                        {% else %}
+                            <button type="submit", name="post_id",
+                            value="{{ post.id }}", class= "btn 
+                            btn-primary btn-sm">Like</button>
+
+                        {% endif %}
+                    {% else %}
+                        <small>Login to like</small>
+                    {% endif %}
+                        - {{ total_likes }} Likes
+                    </form> 
                 </div>
             </div>
         </div>
@@ -82,8 +104,6 @@
                    <button class=" btn btn-sm"> {% post_to_whatsapp object_or_url "Share via WhatsApp" %}</button> 
                    <button class=" btn btn-sm">{% post_to_linkedin object_or_url %}</button> 
                    
-
-                
                     </div>
                 </div>
             </div>
